@@ -1,10 +1,12 @@
 import React from 'react'
-import {LoginCard} from '@/components/ui/LoginCard'
+import {SignUpComponent} from '@/components/ui/SignUpComponent'
 const page = () => {
   return (
-    <div>
-        <h1>Signup</h1>
-    </div>
+    <div className="min-h-screen  flex items-center justify-center overflow-hidden">
+         <div className="container flex items-center justify-center">
+           <SignUpComponent />
+         </div>
+       </div>
   )
 }
 
