@@ -9,8 +9,8 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-screen overflow-hidden" suppressHydrationWarning >
-      <body className="h-screen overflow-hidden">
+    <html lang="en" className="h-screen" suppressHydrationWarning >
+      <body className="h-screen ">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

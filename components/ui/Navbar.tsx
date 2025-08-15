@@ -24,7 +24,7 @@ const Navbar = () => {
     );
   }
   return (
-    <div className="p-5 shadow-md fixed right-0 left-0 flex justify-between  items-center bg-background  z-50">
+    <div className="p-5 shadow-md w-full h-10 flex justify-between  items-center  z-50">
       <MenuIcon />
       <h1 className="text-3xl">Home</h1>
       <SwitchDemo />
