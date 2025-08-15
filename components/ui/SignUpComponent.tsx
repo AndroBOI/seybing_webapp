@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -14,23 +15,29 @@ import Link from "next/link"
 
 export function SignUpComponent() {
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>Create your account</CardTitle>
-        <CardDescription>
-          Enter your details below to <br/> sign up and get started
-        </CardDescription>
+    <Card className="w-full max-w-md  sm:p-6">
+      <CardHeader className="space-y-1 sm:space-y-2">
+        <CardTitle className="!text-lg sm:!text-2xl">
+          Create your account
+        </CardTitle>
         <CardAction>
-          <Link className="text-primary" href="/signin">Sign In</Link>
+          <Link
+            className="text-primary !text-sm sm:!text-base"
+            href="/signin"
+          >
+            Sign In
+          </Link>
         </CardAction>
       </CardHeader>
 
       <CardContent>
         <form>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4 sm:gap-6">
             {/* Full Name */}
-            <div className="grid gap-2">
-              <Label htmlFor="name">Full Name</Label>
+            <div className="grid gap-1 sm:gap-2">
+              <Label htmlFor="name" className="!text-sm sm:!text-base">
+                Full Name
+              </Label>
               <Input
                 id="name"
                 type="text"
@@ -40,8 +47,10 @@ export function SignUpComponent() {
             </div>
 
             {/* Email */}
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+            <div className="grid gap-1 sm:gap-2">
+              <Label htmlFor="email" className="!text-sm sm:!text-base">
+                Email
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -51,14 +60,18 @@ export function SignUpComponent() {
             </div>
 
             {/* Password */}
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+            <div className="grid gap-1 sm:gap-2">
+              <Label htmlFor="password" className="!text-sm sm:!text-base">
+                Password
+              </Label>
               <Input id="password" type="password" required />
             </div>
 
             {/* Confirm Password */}
-            <div className="grid gap-2">
-              <Label htmlFor="confirm-password">Confirm Password</Label>
+            <div className="grid gap-1 sm:gap-2">
+              <Label htmlFor="confirm-password" className="!text-sm sm:!text-base">
+                Confirm Password
+              </Label>
               <Input id="confirm-password" type="password" required />
             </div>
           </div>
@@ -66,10 +79,13 @@ export function SignUpComponent() {
       </CardContent>
 
       <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full !text-sm sm:!text-base py-2 sm:py-3">
           Sign Up
         </Button>
-        <Button variant="outline" className="w-full">
+        <Button
+          variant="outline"
+          className="w-full !text-sm sm:!text-base py-2 sm:py-3"
+        >
           Sign Up with Google
         </Button>
       </CardFooter>

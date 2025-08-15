@@ -1,11 +1,16 @@
-import React from 'react'
+import { UserCard } from "@/components/ui/UserCard";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { SavingsDashboard } from "@/components/ui/SavingDashboard";
 
-const page = () => {
+export default async function page() {
+  const session = await auth();
+  if (!session) redirect("/signin");
+
   return (
     <div>
- 
+        <UserCard session={session}/>
+        <SavingsDashboard/>
     </div>
-  )
+  );
 }
-
-export default page
