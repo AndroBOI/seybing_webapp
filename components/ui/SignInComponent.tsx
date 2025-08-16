@@ -13,6 +13,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+
+
+
 export function SignInComponent() {
   return (
     <Card className="w-full max-w-lg">
@@ -61,10 +64,10 @@ export function SignInComponent() {
         <Button type="submit" className="w-full text-sm sm:text-base">
           Login
         </Button>
-        <Button variant="outline" className="w-full text-sm sm:text-base"
+        <span  className="w-full text-sm sm:text-base"
         onClick={() => signIn("google", {callbackUrl: "/"})}>
           Login with Google
-        </Button>
+        </span>
       </CardFooter>
     </Card>
   );
