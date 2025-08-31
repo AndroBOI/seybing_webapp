@@ -7,12 +7,12 @@ import { Button } from "../ui/button";
 
 const Social = () => {
   return (
-    <div className="flex items-center w-full gap-x-2 lg:h-[700px]">
+    <div className="flex items-center w-full gap-x-2">
       <Button className="flex-1" size="lg" variant="outline">
-        <FcGoogle />
+        <FcGoogle /> Google
       </Button>
       <Button className="flex-1" size="lg" variant="outline">
-        <FaFacebook color="#1877F2" />
+        <FaFacebook color="#1877F2" /> Facebook
       </Button>
     </div>
   );

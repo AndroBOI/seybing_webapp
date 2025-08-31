@@ -2,7 +2,6 @@ import React from 'react'
 
 import { Button } from "../ui/button"
 import Link from "next/link";
-import { link } from 'fs';
 
 interface BackButtonProps {
     href: string;
@@ -17,6 +16,7 @@ const BackButton = ({
     <Button
     variant="link"
     asChild
+    className='w-full flex justify-center items-center'
     >
         <Link href={href}>{label}</Link>
     </Button>
