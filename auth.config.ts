@@ -1,34 +1,55 @@
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google"; 
-
 import { LoginSchema } from "./schemas";
-import type { NextAuthConfig }from "next-auth"
+import type { NextAuthConfig } from "next-auth";
 import { getUserByEmail } from "./data/user";
 import bcrypt from "bcryptjs";
+import { db } from "./lib/db";
 
 export default {
-    providers: [
-        Google,
-        Credentials({
-            async authorize(credentials) {
-                const validatedFields = LoginSchema.safeParse(credentials)
+  providers: [
+    Google,
+    Credentials({
+      async authorize(credentials) {
+        const validatedFields = LoginSchema.safeParse(credentials);
 
-                if(validatedFields.success) {
-                    const {email, password} = validatedFields.data
-                    
-                    const user = await getUserByEmail(email)
-                    if(!user || !user.password) return null
+        if (validatedFields.success) {
+          const { email, password } = validatedFields.data;
 
-                    const passwordsMatch = await bcrypt.compare(
-                        password,
-                        user.password
-                    )
+          const user = await getUserByEmail(email);
+          if (!user || !user.password) return null;
 
-                    if(passwordsMatch) return user
-                }
+          const passwordsMatch = await bcrypt.compare(
+            password,
+            user.password
+          );
 
-                return null
-            }
-        })
-    ],
-} satisfies NextAuthConfig
+          if (passwordsMatch) return user;
+        }
+
+        return null;
+      },
+    }),
+  ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token.sub) {
+        session.user.id = token.sub; // attach userId to session
+      }
+      return session;
+    },
+  },
+  events: {
+    async createUser({ user }) {
+      // This ensures EVERY new user (Google or credentials) has a wallet row
+      await db.money.create({
+        data: {
+          amount: 0,
+          user: {
+            connect: { id: user.id! }, // ✅ connect to the new user
+          },
+        },
+      });
+    },
+  },
+} satisfies NextAuthConfig;
