@@ -1,10 +1,16 @@
 "use client";
 
-import React from "react";
-import { useForm } from "react-hook-form";
-
-import { Button } from "../ui/button";
+import { FormError } from "../form-error";
+import { FormSuccess } from "../form-success";
 import CardWrapper from "./card-wrapper";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { LoginSchema } from "@/schemas";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react"; 
+
+import { Input } from "../ui/input";
 import {
   Form,
   FormControl,
@@ -13,13 +19,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { useState, useTransition } from "react";
 
-import * as z from "zod";
-import { LoginSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-const LoginForm = () => {
+export const LoginForm = () => {
+  const router = useRouter();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -29,58 +36,85 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = () => {
-    alert("Login");
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    setSuccess("");
+    
+    startTransition(async () => {
+      try {
+        const result = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+        });
+
+        if (result?.error) {
+          setError("Invalid credentials!");
+        } else if (result?.ok) {
+          setSuccess("Logged in!");
+          router.push("/dashboard");
+        }
+      } catch (err) {
+        console.error(err)
+        setError("Something went wrong!");
+      }
+    });
   };
 
   return (
     <CardWrapper
       headerLabel="Welcome back"
-      backButtonLabel="Create an account"
+      backButtonLabel="Don't have an account?"
       backButtonHref="/auth/register"
       showSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             <FormField
-              name="email"
               control={form.control}
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="lebron@example.com"></Input>
+                    <Input
+                      disabled={isPending}
+                      {...field}
+                      placeholder="john.doe@example.com"
+                      type="email"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-              name="password"
               control={form.control}
+              name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isPending}
                       {...field}
-                      placeholder="*******"
+                      placeholder="******"
                       type="password"
-                    ></Input>
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <Button type="submit" className="w-full">
-            Login
+          <FormError message={error} />
+          <FormSuccess message={success} />
+          <Button disabled={isPending} type="submit" className="w-full">
+            {isPending ? "Signing in..." : "Login"}
           </Button>
         </form>
       </Form>
     </CardWrapper>
   );
 };
-
-export default LoginForm;
