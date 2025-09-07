@@ -1,4 +1,4 @@
-import { PlusCircleIcon } from "lucide-react";
+import { AddMoney } from "@/components/dashboard/add-money";
 import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/auth";
@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <a href="/dashboard/settings" className="hover:text-gray-300">
           Settings
         </a>
-        <PlusCircleIcon />
+        <AddMoney />
         <a href="/dashboard/profile" className="hover:text-gray-300">
           Profile
         </a>

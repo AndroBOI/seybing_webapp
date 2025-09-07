@@ -1,7 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
+.modal-open {
+  overflow: hidden;
+  padding-right: 15px; /* Approximate scrollbar width */
+}
+
 @custom-variant dark (&:is(.dark *));
+
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
