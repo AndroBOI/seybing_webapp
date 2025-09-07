@@ -34,19 +34,19 @@ export default {
   callbacks: {
     async session({ session, token }) {
       if (token.sub) {
-        session.user.id = token.sub; // attach userId to session
+        session.user.id = token.sub; 
       }
       return session;
     },
   },
   events: {
     async createUser({ user }) {
-      // This ensures EVERY new user (Google or credentials) has a wallet row
+    
       await db.money.create({
         data: {
           amount: 0,
           user: {
-            connect: { id: user.id! }, // ✅ connect to the new user
+            connect: { id: user.id! }, 
           },
         },
       });
