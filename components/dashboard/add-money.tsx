@@ -33,7 +33,7 @@ export function AddMoney() {
       try {
         await addMoney(formData);
         console.log("Money added successfully!");
-        setOpen(false); // Close dialog after success
+        setOpen(false); 
       } catch (error) {
         console.error("Error adding money:", error);
         alert("Failed to add money. Please try again.");
@@ -42,12 +42,12 @@ export function AddMoney() {
   };
 
   return (
-    <Dialog modal={false} open={open} onOpenChange={setOpen}>
+    <Dialog modal={false} open={open} onOpenChange={setOpen} >
       <DialogTrigger asChild>
         <PlusCircleIcon size={34} className="cursor-pointer"/>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <form onSubmit={handleSubmit}>
+      <DialogContent className="sm:max-w-[425px] ">
+        <form onSubmit={handleSubmit} className="space-y-10">
           <DialogHeader>
             <DialogTitle>Add Money</DialogTitle>
             <DialogDescription>
@@ -56,7 +56,7 @@ export function AddMoney() {
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <Label htmlFor="amount">Amount ($)</Label>
+              <Label htmlFor="amount">Amount (₱)</Label>
               <Input 
                 id="amount" 
                 name="amount" 

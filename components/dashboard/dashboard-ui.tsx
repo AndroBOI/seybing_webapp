@@ -26,7 +26,6 @@ const Dashboard = async () => {
   return (
     <div className="p-4">
       <DashboardHeader balance={balance}/>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi exercitationem labore dolor vitae ea sapiente cumque laboriosam blanditiis velit quam, adipisci voluptate magnam, maxime delectus eius saepe, quo quae at corrupti eaque. Dignissimos maiores voluptate inventore expedita enim dolorem, tempore quaerat aspernatur. Mollitia necessitatibus non itaque vero eveniet ducimus eos doloribus in? Enim nulla voluptatibus sapiente reprehenderit, autem nisi accusamus incidunt quos consectetur veniam officiis error cumque?</p>
     </div>
   );
 };
