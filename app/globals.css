@@ -2,9 +2,8 @@
 @import "tw-animate-css";
 
 
-.modal-open {
-  overflow: hidden;
-  padding-right: 15px; /* Approximate scrollbar width */
+body {
+  overflow-x: hidden;
 }
 
 @custom-variant dark (&:is(.dark *));

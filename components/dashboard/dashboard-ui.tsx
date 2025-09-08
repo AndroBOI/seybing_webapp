@@ -1,9 +1,8 @@
 import React from "react";
 import { auth} from "@/auth";
 import { db } from "@/lib/db";
-
+import { LineChart } from "./line-chart";
 import DashboardHeader from "./dashboard-header";
-
 const Dashboard = async () => {
   const session = await auth();
 
@@ -24,8 +23,9 @@ const Dashboard = async () => {
   const balance = user.money?.amount ?? 0;
 
   return (
-    <div className="p-4">
+    <div className="space-7">
       <DashboardHeader balance={balance}/>
+      <LineChart/>
     </div>
   );
 };

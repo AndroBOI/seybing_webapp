@@ -4,7 +4,7 @@ import Dashboard from '@/components/dashboard/dashboard-ui'
 
 const page = () => {
   return (
-    <div>
+    <div className='overflow-hidden'>
       <Dashboard/>
     </div>
   )

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../ui/button";
+
 
 interface DashboardHeaderProps {
   balance: number;
@@ -7,11 +7,9 @@ interface DashboardHeaderProps {
 
 const DashboardHeader = ({ balance }: DashboardHeaderProps) => {
   return (
-    <div className="flex flex-col justify-center items-center space-y-4">
-      <Button variant="outline" className="rounded-full">
-        This Month
-      </Button>
-      <p className="text-4xl">₱{balance}</p>
+    <div className="flex flex-col justify-center items-center space-y-7">
+     
+      <p className="text-5xl">₱{balance}</p>
     </div>
   );
 };
