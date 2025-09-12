@@ -62,8 +62,9 @@ export function LineChart() {
     }
 
     return allDates.map((date) => {
-      const existing = chartData.find((item) => item.date === date);
-      return { date, money: existing?.money ?? 0 };
+      const dailyRecords = chartData.filter((item) => item.date === date);
+      const totalForDay = dailyRecords.reduce((sum, r) => sum + r.money, 0)
+      return { date, money: totalForDay };
     });
   }, [timeRange, chartData]);
 
