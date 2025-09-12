@@ -26,27 +26,12 @@ export async function addMoney(formData: FormData): Promise<void> {
     }
 
    
-    const existingMoney = await db.money.findUnique({
-      where: { userId: session.user.id }
-    });
-
-    if (existingMoney) {
-    
-      await db.money.update({
-        where: { userId: session.user.id },
-        data: {
-          amount: existingMoney.amount + amount
-        }
-      });
-    } else {
-      // Create new money record
-      await db.money.create({
-        data: {
-          amount: amount,
-          userId: session.user.id
-        }
-      });
+   await db.money.create({
+    data: {
+      userId: session.user.id,
+      amount,
     }
+   })
 
     
     revalidatePath("/dashboard");

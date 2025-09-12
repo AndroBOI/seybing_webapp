@@ -1039,10 +1039,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     accounts: number
+    money: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+    money?: boolean | UserCountOutputTypeCountMoneyArgs
   }
 
   // Custom InputTypes
@@ -1061,6 +1063,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AccountWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMoneyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MoneyWhereInput
   }
 
 
@@ -1285,7 +1294,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
-      money: Prisma.$MoneyPayload<ExtArgs> | null
+      money: Prisma.$MoneyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1689,7 +1698,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    money<T extends User$moneyArgs<ExtArgs> = {}>(args?: Subset<T, User$moneyArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    money<T extends User$moneyArgs<ExtArgs> = {}>(args?: Subset<T, User$moneyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2153,6 +2162,11 @@ export namespace Prisma {
      */
     include?: MoneyInclude<ExtArgs> | null
     where?: MoneyWhereInput
+    orderBy?: MoneyOrderByWithRelationInput | MoneyOrderByWithRelationInput[]
+    cursor?: MoneyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MoneyScalarFieldEnum | MoneyScalarFieldEnum[]
   }
 
   /**
@@ -4603,7 +4617,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     password?: StringNullableFilter<"User"> | string | null
     accounts?: AccountListRelationFilter
-    money?: XOR<MoneyNullableScalarRelationFilter, MoneyWhereInput> | null
+    money?: MoneyListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4614,7 +4628,7 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     accounts?: AccountOrderByRelationAggregateInput
-    money?: MoneyOrderByWithRelationInput
+    money?: MoneyOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4628,7 +4642,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     password?: StringNullableFilter<"User"> | string | null
     accounts?: AccountListRelationFilter
-    money?: XOR<MoneyNullableScalarRelationFilter, MoneyWhereInput> | null
+    money?: MoneyListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4771,15 +4785,15 @@ export namespace Prisma {
 
   export type MoneyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    userId?: string
     AND?: MoneyWhereInput | MoneyWhereInput[]
     OR?: MoneyWhereInput[]
     NOT?: MoneyWhereInput | MoneyWhereInput[]
     amount?: FloatFilter<"Money"> | number
     createdAt?: DateTimeFilter<"Money"> | Date | string
     updatedAt?: DateTimeFilter<"Money"> | Date | string
+    userId?: StringFilter<"Money"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "userId">
+  }, "id">
 
   export type MoneyOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4813,7 +4827,7 @@ export namespace Prisma {
     image?: string | null
     password?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
-    money?: MoneyCreateNestedOneWithoutUserInput
+    money?: MoneyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4824,7 +4838,7 @@ export namespace Prisma {
     image?: string | null
     password?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    money?: MoneyUncheckedCreateNestedOneWithoutUserInput
+    money?: MoneyUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4835,7 +4849,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
-    money?: MoneyUpdateOneWithoutUserNestedInput
+    money?: MoneyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4846,7 +4860,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    money?: MoneyUncheckedUpdateOneWithoutUserNestedInput
+    money?: MoneyUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5082,9 +5096,10 @@ export namespace Prisma {
     none?: AccountWhereInput
   }
 
-  export type MoneyNullableScalarRelationFilter = {
-    is?: MoneyWhereInput | null
-    isNot?: MoneyWhereInput | null
+  export type MoneyListRelationFilter = {
+    every?: MoneyWhereInput
+    some?: MoneyWhereInput
+    none?: MoneyWhereInput
   }
 
   export type SortOrderInput = {
@@ -5093,6 +5108,10 @@ export namespace Prisma {
   }
 
   export type AccountOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MoneyOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5354,10 +5373,11 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
-  export type MoneyCreateNestedOneWithoutUserInput = {
-    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
-    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput
-    connect?: MoneyWhereUniqueInput
+  export type MoneyCreateNestedManyWithoutUserInput = {
+    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput> | MoneyCreateWithoutUserInput[] | MoneyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput | MoneyCreateOrConnectWithoutUserInput[]
+    createMany?: MoneyCreateManyUserInputEnvelope
+    connect?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
   }
 
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
@@ -5367,10 +5387,11 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
-  export type MoneyUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
-    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput
-    connect?: MoneyWhereUniqueInput
+  export type MoneyUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput> | MoneyCreateWithoutUserInput[] | MoneyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput | MoneyCreateOrConnectWithoutUserInput[]
+    createMany?: MoneyCreateManyUserInputEnvelope
+    connect?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5399,14 +5420,18 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
-  export type MoneyUpdateOneWithoutUserNestedInput = {
-    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
-    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput
-    upsert?: MoneyUpsertWithoutUserInput
-    disconnect?: MoneyWhereInput | boolean
-    delete?: MoneyWhereInput | boolean
-    connect?: MoneyWhereUniqueInput
-    update?: XOR<XOR<MoneyUpdateToOneWithWhereWithoutUserInput, MoneyUpdateWithoutUserInput>, MoneyUncheckedUpdateWithoutUserInput>
+  export type MoneyUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput> | MoneyCreateWithoutUserInput[] | MoneyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput | MoneyCreateOrConnectWithoutUserInput[]
+    upsert?: MoneyUpsertWithWhereUniqueWithoutUserInput | MoneyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MoneyCreateManyUserInputEnvelope
+    set?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
+    disconnect?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
+    delete?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
+    connect?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
+    update?: MoneyUpdateWithWhereUniqueWithoutUserInput | MoneyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MoneyUpdateManyWithWhereWithoutUserInput | MoneyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MoneyScalarWhereInput | MoneyScalarWhereInput[]
   }
 
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
@@ -5423,14 +5448,18 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
-  export type MoneyUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
-    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput
-    upsert?: MoneyUpsertWithoutUserInput
-    disconnect?: MoneyWhereInput | boolean
-    delete?: MoneyWhereInput | boolean
-    connect?: MoneyWhereUniqueInput
-    update?: XOR<XOR<MoneyUpdateToOneWithWhereWithoutUserInput, MoneyUpdateWithoutUserInput>, MoneyUncheckedUpdateWithoutUserInput>
+  export type MoneyUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput> | MoneyCreateWithoutUserInput[] | MoneyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput | MoneyCreateOrConnectWithoutUserInput[]
+    upsert?: MoneyUpsertWithWhereUniqueWithoutUserInput | MoneyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MoneyCreateManyUserInputEnvelope
+    set?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
+    disconnect?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
+    delete?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
+    connect?: MoneyWhereUniqueInput | MoneyWhereUniqueInput[]
+    update?: MoneyUpdateWithWhereUniqueWithoutUserInput | MoneyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MoneyUpdateManyWithWhereWithoutUserInput | MoneyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MoneyScalarWhereInput | MoneyScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -5726,6 +5755,11 @@ export namespace Prisma {
     create: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
   }
 
+  export type MoneyCreateManyUserInputEnvelope = {
+    data: MoneyCreateManyUserInput | MoneyCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -5760,29 +5794,31 @@ export namespace Prisma {
     session_state?: StringNullableFilter<"Account"> | string | null
   }
 
-  export type MoneyUpsertWithoutUserInput = {
+  export type MoneyUpsertWithWhereUniqueWithoutUserInput = {
+    where: MoneyWhereUniqueInput
     update: XOR<MoneyUpdateWithoutUserInput, MoneyUncheckedUpdateWithoutUserInput>
     create: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
-    where?: MoneyWhereInput
   }
 
-  export type MoneyUpdateToOneWithWhereWithoutUserInput = {
-    where?: MoneyWhereInput
+  export type MoneyUpdateWithWhereUniqueWithoutUserInput = {
+    where: MoneyWhereUniqueInput
     data: XOR<MoneyUpdateWithoutUserInput, MoneyUncheckedUpdateWithoutUserInput>
   }
 
-  export type MoneyUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type MoneyUpdateManyWithWhereWithoutUserInput = {
+    where: MoneyScalarWhereInput
+    data: XOR<MoneyUpdateManyMutationInput, MoneyUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type MoneyUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type MoneyScalarWhereInput = {
+    AND?: MoneyScalarWhereInput | MoneyScalarWhereInput[]
+    OR?: MoneyScalarWhereInput[]
+    NOT?: MoneyScalarWhereInput | MoneyScalarWhereInput[]
+    id?: StringFilter<"Money"> | string
+    amount?: FloatFilter<"Money"> | number
+    createdAt?: DateTimeFilter<"Money"> | Date | string
+    updatedAt?: DateTimeFilter<"Money"> | Date | string
+    userId?: StringFilter<"Money"> | string
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -5792,7 +5828,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     image?: string | null
     password?: string | null
-    money?: MoneyCreateNestedOneWithoutUserInput
+    money?: MoneyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -5802,7 +5838,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     image?: string | null
     password?: string | null
-    money?: MoneyUncheckedCreateNestedOneWithoutUserInput
+    money?: MoneyUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -5828,7 +5864,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    money?: MoneyUpdateOneWithoutUserNestedInput
+    money?: MoneyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -5838,7 +5874,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    money?: MoneyUncheckedUpdateOneWithoutUserNestedInput
+    money?: MoneyUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMoneyInput = {
@@ -5911,6 +5947,13 @@ export namespace Prisma {
     session_state?: string | null
   }
 
+  export type MoneyCreateManyUserInput = {
+    id?: string
+    amount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AccountUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -5951,6 +5994,27 @@ export namespace Prisma {
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     id_token?: NullableStringFieldUpdateOperationsInput | string | null
     session_state?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MoneyUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MoneyUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MoneyUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

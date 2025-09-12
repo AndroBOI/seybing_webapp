@@ -3,6 +3,7 @@ import { auth} from "@/auth";
 import { db } from "@/lib/db";
 import { LineChart } from "./line-chart";
 import DashboardHeader from "./dashboard-header";
+
 const Dashboard = async () => {
   const session = await auth();
 
@@ -20,7 +21,7 @@ const Dashboard = async () => {
   }
 
   
-  const balance = user.money?.amount ?? 0;
+  const balance = user.money?.reduce((sum, n) => sum + n.amount, 0) ?? 0;
 
   return (
     <div className="mt-10 space-7">
