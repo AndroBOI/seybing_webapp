@@ -9,7 +9,7 @@ const DashboardHeader = ({ balance }: DashboardHeaderProps) => {
   return (
     <div className="flex flex-col justify-center items-center space-y-7">
      
-      <p className="text-5xl">₱{balance}</p>
+      <p className="text-5xl">₱{balance.toFixed(2)}</p>
     </div>
   );
 };

@@ -23,7 +23,7 @@ const Dashboard = async () => {
   const balance = user.money?.amount ?? 0;
 
   return (
-    <div className="space-7">
+    <div className="mt-10 space-7">
       <DashboardHeader balance={balance}/>
       <LineChart/>
     </div>
