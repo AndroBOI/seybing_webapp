@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";   // 👈 import router
+import { Button } from "@/components/ui/button";
 import { PlusCircleIcon } from "lucide-react";
 import {
   Dialog,
@@ -12,28 +13,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { addMoney } from "@/actions/addMoney";
 
 export function AddMoney() {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
     const formData = new FormData(e.currentTarget);
-    const amount = formData.get("amount");
-    
-    console.log("Adding amount:", amount);
-    
+
     startTransition(async () => {
       try {
         await addMoney(formData);
-        console.log("Money added successfully!");
-        setOpen(false); 
+        router.refresh();  
+        setOpen(false);
       } catch (error) {
         console.error("Error adding money:", error);
         alert("Failed to add money. Please try again.");
@@ -42,9 +40,9 @@ export function AddMoney() {
   };
 
   return (
-    <Dialog modal={false} open={open} onOpenChange={setOpen} >
+    <Dialog modal={false} open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <PlusCircleIcon size={34} className="cursor-pointer"/>
+        <PlusCircleIcon size={34} className="cursor-pointer" />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] ">
         <form onSubmit={handleSubmit} className="space-y-10">
@@ -57,10 +55,10 @@ export function AddMoney() {
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="amount">Amount (₱)</Label>
-              <Input 
-                id="amount" 
-                name="amount" 
-                type="number" 
+              <Input
+                id="amount"
+                name="amount"
+                type="number"
                 placeholder="0.00"
                 min="0.01"
                 step="0.01"
@@ -82,5 +80,5 @@ export function AddMoney() {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

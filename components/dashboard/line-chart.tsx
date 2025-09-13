@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   ChartConfig,
@@ -20,50 +19,36 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export const description = "An interactive area chart";
-
 type TimeRange = "7d" | "30d";
 
 const chartConfig = {
   money: { label: "Money", color: "var(--chart-1)" },
 } satisfies ChartConfig;
 
-export function LineChart() {
-  const [timeRange, setTimeRange] = useState<TimeRange>("30d");
-  const [chartData, setChartData] = useState<{ date: string; money: number }[]>(
-    []
-  );
+export function LineChart({ money }: { money: { amount: number; createdAt: Date }[] }) {
+  const [timeRange, setTimeRange] = useState<TimeRange>("7d");
 
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("api/money-history");
-      if (!res.ok) return;
-      const data = await res.json();
-      setChartData(data);
-    }
-    fetchData();
-  }, []);
+
+  const chartData = money.map((m) => ({
+    date: new Date(m.createdAt).toISOString().split("T")[0],
+    money: m.amount,
+  }));
 
   const filteredData = useMemo(() => {
-    const date = new Date();
-    const today = date.toISOString().split("T")[0];
-    const referenceDate = new Date(today);
+    const today = new Date();
+    const referenceDate = new Date(today.toISOString().split("T")[0]);
     const daysToSubtract = timeRange === "7d" ? 7 : 30;
     const startDate = new Date(referenceDate);
     startDate.setDate(startDate.getDate() - daysToSubtract + 1);
 
     const allDates: string[] = [];
-    for (
-      let d = new Date(startDate);
-      d <= referenceDate;
-      d.setDate(d.getDate() + 1)
-    ) {
+    for (let d = new Date(startDate); d <= referenceDate; d.setDate(d.getDate() + 1)) {
       allDates.push(d.toISOString().split("T")[0]);
     }
 
     return allDates.map((date) => {
       const dailyRecords = chartData.filter((item) => item.date === date);
-      const totalForDay = dailyRecords.reduce((sum, r) => sum + r.money, 0)
+      const totalForDay = dailyRecords.reduce((sum, r) => sum + r.money, 0);
       return { date, money: totalForDay };
     });
   }, [timeRange, chartData]);
@@ -78,14 +63,8 @@ export function LineChart() {
   return (
     <Card className="pt-0 bg-transparent border-none shadow-none w-full">
       <CardHeader className="flex items-center gap-2 justify-center py-5 sm:flex-row">
-        <Select
-          value={timeRange}
-          onValueChange={(value) => setTimeRange(value as TimeRange)}
-        >
-          <SelectTrigger
-            className="rounded-lg sm:ml-auto sm:flex"
-            aria-label="Select a value"
-          >
+        <Select value={timeRange} onValueChange={(value) => setTimeRange(value as TimeRange)}>
+          <SelectTrigger className="rounded-lg sm:ml-auto sm:flex" aria-label="Select a value">
             <SelectValue placeholder="Select range" />
           </SelectTrigger>
           <SelectContent className="rounded-xl">
@@ -103,16 +82,8 @@ export function LineChart() {
           >
             <defs>
               <linearGradient id="fillMoney" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-money)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-money)"
-                  stopOpacity={0.1}
-                />
+                <stop offset="5%" stopColor="var(--color-money)" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="var(--color-money)" stopOpacity={0.1} />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} horizontal={false} />
@@ -120,7 +91,6 @@ export function LineChart() {
               dataKey="date"
               tickLine={false}
               axisLine={false}
-              tickMargin={0}
               minTickGap={Math.floor(filteredData.length > 7 ? 30 : 10)}
               tickFormatter={xTickFormatter}
             />
@@ -129,10 +99,7 @@ export function LineChart() {
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) =>
-                    new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    })
+                    new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })
                   }
                   indicator="dot"
                 />
