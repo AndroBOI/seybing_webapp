@@ -1,7 +1,7 @@
 import React from "react";
 import { auth} from "@/auth";
 import { db } from "@/lib/db";
-import { LineChart } from "./line-chart";
+import { DashBoardLineChart } from "./line-chart";
 import DashboardHeader from "./dashboard-header";
 
 const Dashboard = async () => {
@@ -26,7 +26,7 @@ const Dashboard = async () => {
   return (
     <div className="mt-10 space-7">
       <DashboardHeader balance={balance}/>
-      <LineChart money={user.money}/>
+      <DashBoardLineChart money={user.money}/>
     </div>
   );
 };
