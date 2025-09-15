@@ -72,7 +72,7 @@ export function DashBoardLineChart({ money }: { money: { amount: number; created
       </CardHeader>
       <CardContent className="px-0 pt-4 sm:px-0 sm:pt-6 w-full">
         <ChartContainer config={chartConfig} className="w-full h-[250px]">
-          <ResponsiveContainer width="100%" height="100%">
+    
             <LineChart data={filteredData} margin={{ top: 30, right: 0, left: 0, bottom: 60 }}>
               <CartesianGrid vertical={false} horizontal={false} />
               <XAxis
@@ -106,7 +106,7 @@ export function DashBoardLineChart({ money }: { money: { amount: number; created
                 isAnimationActive={true}
               />
             </LineChart>
-          </ResponsiveContainer>
+        
         </ChartContainer>
       </CardContent>
     </Card>

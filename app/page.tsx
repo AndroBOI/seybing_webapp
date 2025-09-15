@@ -5,7 +5,7 @@ import LoginButton from "@/components/auth/login-btn";
 
 const page = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="flex items-center min-h-[100dvh] justify-center">
       <LoginButton>
         <Button>Login</Button>
       </LoginButton>
