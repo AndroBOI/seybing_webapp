@@ -32,6 +32,9 @@ export function AddMoney() {
         await addMoney(formData);
         router.refresh();  
         setOpen(false);
+        if(window.location.pathname !== "/dashboard") {
+          router.push("/dashboard")
+        }
       } catch (error) {
         console.error("Error adding money:", error);
         alert("Failed to add money. Please try again.");

@@ -3,6 +3,7 @@ import { auth} from "@/auth";
 import { db } from "@/lib/db";
 import { DashBoardLineChart } from "./line-chart";
 import DashboardHeader from "./dashboard-header";
+import TodaysLog from "./today-log";
 
 const Dashboard = async () => {
   const session = await auth();
@@ -24,9 +25,10 @@ const Dashboard = async () => {
   const balance = user.money?.reduce((sum, n) => sum + n.amount, 0) ?? 0;
 
   return (
-    <div className="mt-10 space-7">
+    <div className="mt-4 space-y-2">
       <DashboardHeader balance={balance}/>
       <DashBoardLineChart money={user.money}/>
+      <TodaysLog userId={user.id}/>
     </div>
   );
 };
