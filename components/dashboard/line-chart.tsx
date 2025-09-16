@@ -92,7 +92,7 @@ export function DashBoardLineChart({ money }: { money: { amount: number; created
                     labelFormatter={(value) =>
                       new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })
                     }
-                    formatter={(value : number ) => [`Money ₱ ${value.toLocaleString()}`, ""]}
+                  
                     indicator="dot"
                   />
                 }

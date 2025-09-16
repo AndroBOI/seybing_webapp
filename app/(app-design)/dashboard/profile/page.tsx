@@ -21,7 +21,7 @@ const ProfilePage = async () => {
     `https://ui-avatars.com/api/?name=${initials}&background=0D8ABC&color=fff&size=128`;
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md flex flex-col items-center gap-4">
+    <div className="max-w-md mx-auto mt-10 p-6 rounded-lg shadow-md flex flex-col items-center gap-4">
       <div className="relative w-24 h-24">
         <Image
           src={avatarUrl}

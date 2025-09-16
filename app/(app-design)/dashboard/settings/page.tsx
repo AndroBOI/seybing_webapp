@@ -1,8 +1,10 @@
 import React from 'react'
-
+import { ModeToggle } from '@/components/ModeToggle'
 const page = () => {
   return (
-    <div>Setting</div>
+    <div>
+      <ModeToggle/>
+    </div>
   )
 }
 
