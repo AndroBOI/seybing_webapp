@@ -36,12 +36,12 @@ const TodaysLog = async ({ userId }: { userId: string }) => {
   const totalToday = todaysEntries.reduce((acc, e) => acc + e.amount, 0);
 
   return (
-    <Card className="w-full  mx-auto mt-6 shadow-none border-none bg-transparent">
+    <Card className="w-full mx-auto mt-3 shadow-none border-none bg-transparent">
   <CardHeader>
     <h2 className="text-lg font-semibold">Todays Entries</h2>
   </CardHeader>
 
-  <CardContent className="space-y-2 h-[200px] overflow-y-auto">
+  <CardContent className="space-y-2 h-[100px] overflow-y-auto">
     {todaysEntries.length === 0 ? (
       <p className="text-gray-500">No entries today yet.</p>
     ) : (
@@ -64,7 +64,7 @@ const TodaysLog = async ({ userId }: { userId: string }) => {
 
   <CardFooter className="flex justify-between font-semibold">
     <span>Total:</span>
-    <span className="text-blue-600">₱ {totalToday.toLocaleString()}</span>
+    <span >₱ {totalToday.toLocaleString()}</span>
   </CardFooter>
 </Card>
   );

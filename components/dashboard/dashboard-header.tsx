@@ -7,7 +7,7 @@ interface DashboardHeaderProps {
 
 const DashboardHeader = ({ balance }: DashboardHeaderProps) => {
   return (
-    <div className="flex flex-col justify-center items-center space-y-3">
+    <div className="flex flex-col justify-center items-center space-y-3 mt-6">
      
       <p className="text-5xl">₱{balance.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
     </div>

@@ -6,9 +6,6 @@ body {
   overflow-x: hidden;
 }
 
-* {
-  outline: solid 1px lightblue;
-}
 
 
 @custom-variant dark (&:is(.dark *));

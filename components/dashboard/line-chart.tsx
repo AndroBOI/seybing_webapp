@@ -20,7 +20,7 @@ import {
 type TimeRange = "7d" | "30d";
 
 const chartConfig = {
-  money: { color: "var(--chart-1)" },
+  money: { color: "var(--chart-1)",  },
 } satisfies ChartConfig;
 
 export function DashBoardLineChart({ money }: { money: { amount: number; createdAt: Date }[] }) {
@@ -59,7 +59,7 @@ export function DashBoardLineChart({ money }: { money: { amount: number; created
 
   return (
     <Card className="pt-0 bg-transparent border-none shadow-none w-full">
-      <CardHeader className="flex items-center gap-2 justify-center py-5 sm:flex-row">
+      <CardHeader className="flex items-center gap-2 justify-center py-2 sm:flex-row">
         <Select value={timeRange} onValueChange={(value) => setTimeRange(value as TimeRange)}>
           <SelectTrigger className="rounded-lg sm:ml-auto sm:flex" aria-label="Select a value">
             <SelectValue placeholder="Select range" />
@@ -70,10 +70,10 @@ export function DashBoardLineChart({ money }: { money: { amount: number; created
           </SelectContent>
         </Select>
       </CardHeader>
-      <CardContent className="px-0 pt-4 sm:px-0 sm:pt-6 w-full">
-        <ChartContainer config={chartConfig} className="w-full h-[250px]">
+      <CardContent className="px-0 sm:px-0 sm:pt-6 w-full">
+        <ChartContainer config={chartConfig} className="w-full h-[170px]">
     
-            <LineChart data={filteredData} margin={{ top: 30, right: 0, left: 0, bottom: 60 }}>
+            <LineChart data={filteredData} margin={{ top: 0, right: 0, left: 0, bottom: 10 }}>
               <CartesianGrid vertical={false} horizontal={false} />
               <XAxis
                 dy={20}
@@ -88,10 +88,11 @@ export function DashBoardLineChart({ money }: { money: { amount: number; created
               <Tooltip
                 cursor={false}
                 content={
-                  <ChartTooltipContent
+                  <ChartTooltipContent className="gap-2 p-1"
                     labelFormatter={(value) =>
                       new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })
                     }
+                    formatter={(value : number ) => [`Money ₱ ${value.toLocaleString()}`, ""]}
                     indicator="dot"
                   />
                 }
@@ -102,7 +103,7 @@ export function DashBoardLineChart({ money }: { money: { amount: number; created
                 stroke="var(--color-money)"
                 strokeWidth={4}
                 dot={false} // normal dots
-                activeDot={{ r: 8, fill: "var(--color-money)" }} // hover dot
+                activeDot={{ r: 8, fill: "var(--color-money)" }} 
                 isAnimationActive={true}
               />
             </LineChart>
