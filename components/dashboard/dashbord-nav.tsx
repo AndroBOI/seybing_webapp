@@ -4,14 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { AddMoney } from "@/components/dashboard/add-money";
-import { HomeIcon, UserIcon, SettingsIcon } from "lucide-react";
+import { HomeIcon, UserIcon } from "lucide-react";
 
 export function DashboardNavbar() {
   const pathname = usePathname();
 
   const links = [
     { href: "/dashboard", label: "Home", icon: HomeIcon },
-    { href: "/dashboard/settings", label: "Settings", icon: SettingsIcon },
     { href: "/dashboard/profile", label: "Profile", icon: UserIcon },
   ];
 

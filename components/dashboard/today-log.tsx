@@ -37,36 +37,38 @@ const TodaysLog = async ({ userId }: { userId: string }) => {
 
   return (
     <Card className="w-full mx-auto mt-3 shadow-none border-none bg-transparent">
-  <CardHeader>
-    <h2 className="text-lg font-semibold">Todays Entries</h2>
-  </CardHeader>
+      <CardHeader>
+        <h2 className="text-sm font-semibold text-gray-500">Todays Entries</h2>
+      </CardHeader>
 
-  <CardContent className="space-y-2 h-[100px] overflow-y-auto">
-    {todaysEntries.length === 0 ? (
-      <p className="text-gray-500">No entries today yet.</p>
-    ) : (
-      todaysEntries.map((entry, idx) => (
-        <React.Fragment key={entry.id}>
-          <div className="flex justify-between">
-            <span>₱ {entry.amount.toLocaleString()}</span>
-            <span className="text-sm text-gray-400">
-              {entry.createdAt.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-          </div>
-          {idx !== todaysEntries.length - 1 && <Separator />}
-        </React.Fragment>
-      ))
-    )}
-  </CardContent>
+      <CardContent className="space-y-2 md:h-[250px] h-[100px] overflow-y-auto">
+        {todaysEntries.length === 0 ? (
+          <p className="text-gray-500">No entries today yet.</p>
+        ) : (
+          todaysEntries.map((entry, idx) => (
+            
+              <div key={entry.id}>
+                <div className="flex justify-between">
+                  <span>₱ {entry.amount.toLocaleString()}</span>
+                  <span className="text-sm text-gray-400">
+                    {entry.createdAt.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </div>
+                {idx !== todaysEntries.length - 1 && <Separator />}
+              </div>
+            
+          ))
+        )}
+      </CardContent>
 
-  <CardFooter className="flex justify-between font-semibold">
-    <span>Total:</span>
-    <span >₱ {totalToday.toLocaleString()}</span>
-  </CardFooter>
-</Card>
+      <CardFooter className="flex justify-between font-semibold">
+        <span>Total:</span>
+        <span>₱ {totalToday.toLocaleString()}</span>
+      </CardFooter>
+    </Card>
   );
 };
 
