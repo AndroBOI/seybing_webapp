@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     domains: [
       "ui-avatars.com",
       "lh3.googleusercontent.com",
+       "cdn-icons-png.flaticon.com",
     ], 
   },
 };
