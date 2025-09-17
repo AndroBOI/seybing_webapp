@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { useEffect, useTransition, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -13,13 +13,17 @@ import { deleteInput } from "@/actions/deleteInput";
 import type { MoneyEntry } from "./today-log";
 
 const TodaysLogClient = ({ entries }: { entries: MoneyEntry[] }) => {
-  const [list, setList] = React.useState(entries);
+  const [list, setList] = useState(entries);
   const [isPending, startTransition] = useTransition();
+ 
+  useEffect(() => {
+    setList(entries);
+  }, [entries]);
 
   const handleDelete = (id: string) => {
     startTransition(async () => {
       await deleteInput(id);
-      setList((prev) => prev.filter((e) => e.id !== id));
+      setList((prev) => prev.filter((e) => e.id !== id)); 
     });
   };
 
@@ -57,8 +61,6 @@ const TodaysLogClient = ({ entries }: { entries: MoneyEntry[] }) => {
                     </span>
                   </div>
                 </div>
-
-                {/* Delete Icon */}
               </div>
 
               {idx !== list.length - 1 && <Separator />}
