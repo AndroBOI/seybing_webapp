@@ -51,9 +51,10 @@ const TodaysLog = async ({ userId }: { userId: string }) => {
                 <div className="flex justify-between">
                   <span>₱ {entry.amount.toLocaleString()}</span>
                   <span className="text-sm text-gray-400">
-                    {entry.createdAt.toLocaleTimeString([], {
+                    {entry.createdAt.toLocaleTimeString("en-PH", {
                       hour: "2-digit",
                       minute: "2-digit",
+                      timeZone: "Asia/Manila"
                     })}
                   </span>
                 </div>
