@@ -1,14 +1,8 @@
-import React from "react";
+// TodaysLog.tsx (Server Component)
 import { db } from "@/lib/db";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import TodaysLogClient from "./today-log-table";
 
-type MoneyEntry = {
+export type MoneyEntry = {
   id: string;
   amount: number;
   createdAt: Date;
@@ -33,44 +27,7 @@ const TodaysLog = async ({ userId }: { userId: string }) => {
     orderBy: { createdAt: "desc" },
   });
 
-  const totalToday = todaysEntries.reduce((acc, e) => acc + e.amount, 0);
-
-  return (
-    <Card className="w-full mx-auto mt-3 shadow-none border-none bg-transparent">
-      <CardHeader>
-        <h2 className="text-sm font-semibold text-gray-500">Todays Entries</h2>
-      </CardHeader>
-
-      <CardContent className="space-y-2 md:h-[250px] h-[100px] overflow-y-auto">
-        {todaysEntries.length === 0 ? (
-          <p className="text-gray-500">No entries today yet.</p>
-        ) : (
-          todaysEntries.map((entry, idx) => (
-            
-              <div key={entry.id}>
-                <div className="flex justify-between">
-                  <span>₱ {entry.amount.toLocaleString()}</span>
-                  <span className="text-sm text-gray-400">
-                    {entry.createdAt.toLocaleTimeString("en-PH", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      timeZone: "Asia/Manila"
-                    })}
-                  </span>
-                </div>
-                {idx !== todaysEntries.length - 1 && <Separator />}
-              </div>
-            
-          ))
-        )}
-      </CardContent>
-
-      <CardFooter className="flex justify-between font-semibold">
-        <span>Total:</span>
-        <span>₱ {totalToday.toLocaleString()}</span>
-      </CardFooter>
-    </Card>
-  );
+  return <TodaysLogClient entries={todaysEntries} />;
 };
 
 export default TodaysLog;
