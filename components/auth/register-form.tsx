@@ -26,7 +26,7 @@ export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
-  const [isPending, setIsPending] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -113,8 +113,8 @@ export const RegisterForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button disabled={isPending} type="submit" className="w-full">
-            Register
+         <Button disabled={isPending} type="submit" className="w-full">
+            {isPending ? "Creating Account..." : "Register"}
           </Button>
         </form>
       </Form>
