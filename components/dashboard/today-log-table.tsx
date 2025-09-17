@@ -8,7 +8,6 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Trash2 } from "lucide-react";
 import { deleteInput } from "@/actions/deleteInput";
 import type { MoneyEntry } from "./today-log";
 
@@ -42,23 +41,24 @@ const TodaysLogClient = ({ entries }: { entries: MoneyEntry[] }) => {
           list.map((entry, idx) => (
             <div key={entry.id}>
               <div className="flex justify-between items-center">
-                <div className="w-full flex justify-between">
+                <div className="w-full flex justify-between items-center  py-2">
                   <span>₱ {entry.amount.toLocaleString()}</span>
                   <div>
                     <button
-                      onClick={() => handleDelete(entry.id)}
-                      disabled={isPending}
-                      className="text-gray-500 hover:text-red-700"
+                     
                     >
-                      <Trash2 size={16} />
+                    
                     </button>
-                    <span className="ml-2 text-sm text-gray-400">
+                    <button className="ml-2 text-sm text-gray-400  hover:text-red-700 items-center"
+                     onClick={() => handleDelete(entry.id)}
+                      disabled={isPending}
+                     >
                       {new Date(entry.createdAt).toLocaleTimeString("en-PH", {
                         hour: "2-digit",
                         minute: "2-digit",
                         timeZone: "Asia/Manila",
                       })}
-                    </span>
+                    </button>
                   </div>
                 </div>
               </div>
