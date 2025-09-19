@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { LineChart, Line, CartesianGrid, XAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { LineChart, Line, CartesianGrid, XAxis, Tooltip, } from "recharts";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
-  ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import {
@@ -39,6 +38,7 @@ export function DashBoardLineChart({ money }: { money: { amount: number; created
     startDate.setDate(startDate.getDate() - daysToSubtract + 1);
 
     const allDates: string[] = [];
+
     for (let d = new Date(startDate); d <= referenceDate; d.setDate(d.getDate() + 1)) {
       allDates.push(d.toISOString().split("T")[0]);
     }
