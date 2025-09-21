@@ -30,7 +30,7 @@ export function AddMoney() {
     startTransition(async () => {
       try {
         await addMoney(formData);
-        router.refresh();  
+       
         setOpen(false);
         if(window.location.pathname !== "/dashboard") {
           router.push("/dashboard")
